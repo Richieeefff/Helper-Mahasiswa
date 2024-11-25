@@ -27,27 +27,37 @@ def register():
         time.sleep(1)
         return
     
-    user_data[username] = password
+    new_user = {
+        "username": username,
+        "password": password,
+        "scheduled_tasks": [],
+        "university_schedule": []
+    }
+
+    user_data["users"].append(new_user)
     save_user_data(user_data)
     print("Berhasil Register.")
 
 def login():
     username = input("Masukkan username: ")
     password = getpass.getpass("Masukkan password: ")
-
+    
     user_data = load_user_data()
-    if username == "admin" and password == "admin":
-        print("\nSelamat datang admin!")
-        time.sleep(1)
-        return True, username
-    elif username in user_data and user_data[username] == password:
-        print("\nLogin Berhasil!")
-        time.sleep(1)
-        return True, username # Jika berhasil login return True agar bisa dilakukan check
-    else:
-        print("\nUsername atau Password salah!")
-        time.sleep(1)
-        return False, None # Jika login salah return False
+
+    for user in user_data["users"]:
+        if user["username"] == "admin":
+            return True, username
+        if user["username"] == username:
+            if user["password"] == password:
+                print(f"Login berhasil. Welcome, {username}!")
+                return True, username
+            else:
+                print("Password atau Username salah. Tolong coba lagi.")
+                return False
+
+    # Username not found
+    print("Username tidak ditemukan. Tolong register terlebih dahulu")
+    return False
 
 def main():
 

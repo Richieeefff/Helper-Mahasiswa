@@ -1,10 +1,11 @@
 import time
 from utils import helper
+from function import login
 from function import (
     jadwalkuliah,
-    login,
     timerBelajar,
-    tipsBelajar
+    tipsBelajar,
+    jadwalTugas
 )
 
 def interface(username):
@@ -14,7 +15,8 @@ def interface(username):
         print(f"Selamat datang {username} di aplikasi Helper Mahasiswa!\n")
         print("1. Timer Belajar")
         print("2. Atur Jadwal Kuliah")
-        print("3. Exit")
+        print("3. Atur daftar tugas")
+        print("4. Exit")
         choice = input("Pilih dengan angka: ")
 
         if choice == '1':
@@ -24,6 +26,9 @@ def interface(username):
             helper.clear()
             jadwalkuliah.main()
         elif choice == '3':
+            helper.clear()
+            jadwalTugas.main_tugas(username)
+        elif choice == '4':
             print("\nTerima kasih telah menggunakan aplikasi Helper Mahasiswa!")
             break
         else:

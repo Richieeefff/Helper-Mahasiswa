@@ -1,4 +1,6 @@
-def penambahan(tugas):
+from function import login
+
+def penambahan(username):
     
     tanggal = input("Masukkan tanggal (YYYY-MM-DD):")
     matkul = input("Masukkan nama mata kuliah: ")
@@ -7,20 +9,24 @@ def penambahan(tugas):
     kesulitan = input("Masukkan Tingkat kesulitan (Mudah/Sedang/Sulit): ")
     tenggat = input("Masukkan tanggal tenggat tugas (YYYY-MM-DD):")
 
+    
+    database = login.load_user_data()
+    for user in database["users"]:
+        if user["username"] == username:
+            user["scheduled_tasks"].append({
+                                    'tanggal': tanggal,
+                                    'mata_kuliah': matkul, 
+                                    'judul': judul,
+                                    'deskripsi': deskripsi,
+                                    'tingkat_kesulitan': kesulitan,
+                                    'tenggat': tenggat,
+                                    'status':'Belum Selesai'
+                                    })
+            login.save_user_data(database)
+            print("Tugas berhasil ditambahkan!\n")
+            return
+    print(f"User {username} not found.")
 
-    if tanggal not in tugas:
-        tugas[tanggal] = []
-    
-    tugas[tanggal].append({
-        'mata_kuliah': matkul, 
-        'judul': judul,
-        'deskripsi': deskripsi,
-        'tingkat_kesulitan': kesulitan,
-        'tenggat': tenggat,
-        'status':'Belum Selesai'
-        })
-    
-    print("Tugas berhasil ditambahkan!\n")
 
 def tampilan(tugas):
     if not tugas:
@@ -65,7 +71,7 @@ def selesaikanTugas(tugas):
     else:
         print("Pilihan tidak valid.\n")
 
-def main_tugas():
+def main_tugas(username):
     tugas = {}
     
     while True:
@@ -77,7 +83,7 @@ def main_tugas():
         pilihan = input("Pilih menu (1/2/3/4): ")
         
         if pilihan == "1":
-            penambahan(tugas)
+            penambahan(username)
         elif pilihan == "2":
             tampilan(tugas)
         elif pilihan == "3":
