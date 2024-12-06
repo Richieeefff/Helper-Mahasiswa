@@ -44,20 +44,18 @@ def login():
     
     user_data = load_user_data()
 
-    for user in user_data["users"]:
-        if user["username"] == "admin":
-            return True, username
-        if user["username"] == username:
-            if user["password"] == password:
-                print(f"Login berhasil. Welcome, {username}!")
-                return True, username
-            else:
-                print("Password atau Username salah. Tolong coba lagi.")
-                return False
+    if username == "admin" and password == "admin":
+        return username
 
-    # Username not found
-    print("Username tidak ditemukan. Tolong register terlebih dahulu")
-    return False
+    for user in user_data["users"]:
+        if  username == user["username"] and password == user["password"]:
+            print(f"\nLogin berhasil. Welcome, {username}!")
+            time.sleep(1)
+            return username
+    
+    print("\nUsername atau Password salah. Silahkan coba lagi.")
+    time.sleep(1)
+    return None
 
 def main():
 
@@ -74,10 +72,10 @@ def main():
             register()
         elif choice == '2':
             helper.clear()
-            result, user = login()
-            if result:
+            result = login()
+            if result is not None:
                 helper.clear()
-                return user
+                return result
         elif choice == '3':
             break
         else:
