@@ -16,7 +16,8 @@ def interface(username):
         print("1. Timer Belajar")
         print("2. Atur Jadwal Kuliah")
         print("3. Atur daftar tugas")
-        print("4. Exit")
+        print("4. Profil")
+        print("5. Exit")
         choice = input("Pilih dengan angka: ")
 
         if choice == '1':
@@ -29,6 +30,9 @@ def interface(username):
             helper.clear()
             jadwalTugas.main_tugas(username)
         elif choice == '4':
+            helper.clear()
+            jadwalTugas.main_tugas(username)
+        elif choice == '5':
             print("\nTerima kasih telah menggunakan aplikasi Helper Mahasiswa!")
             break
         else:
