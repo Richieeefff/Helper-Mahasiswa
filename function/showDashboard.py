@@ -1,3 +1,13 @@
+import time
+from utils import helper
+from function import login
+from function import (
+    jadwalkuliah,
+    timerBelajar,
+    tipsBelajar,
+    jadwalTugas
+)
+
 def showDashboard():
     while True:
         print("========================================")
@@ -18,7 +28,7 @@ def showDashboard():
         if pilihan == '1':
             profil()
         elif pilihan == '2':
-            jadwalKuliah()
+            jadwalkuliah()
         elif pilihan == '3':
             jadwalTugas()
         elif pilihan == '4':
