@@ -71,6 +71,23 @@ def selesaikanTugas(tugas):
     else:
         print("Pilihan tidak valid.\n")
 
+def hapusTugas(username):
+    tanggal = input("Masukkan tanggal tugas yang ingin dihapus (YYYY-MM-DD): ")
+    judul = input("Masukkan judul tugas yang ingin dihapus: ")
+
+    database = login.load_user_data()
+    for user in database["users"]:
+        if user["username"] == username:
+            for tugas in user["scheduled_tasks"]:
+                if tugas["tanggal"] == tanggal and tugas["judul"] == judul:
+                    user["scheduled_tasks"].remove(tugas)
+                    login.save_user_data(database)
+                    print(f"Tugas '{judul}' pada tanggal {tanggal} berhasil dihapus!\n")
+                    return
+            print("Tugas tidak ditemukan.")
+            return
+    print(f"User {username} tidak ditemukan.")
+
 def main_tugas(username):
     tugas = {}
     
@@ -78,9 +95,10 @@ def main_tugas(username):
         print("1. Menambah Tugas")
         print("2. Menampilkan Tugas")
         print("3. Selesaikan Tugas")
-        print("4. Keluar")
+        print("4. Menghapus Tugas")
+        print("5. Keluar")
         
-        pilihan = input("Pilih menu (1/2/3/4): ")
+        pilihan = input("Pilih menu (1/2/3/4/5): ")
         
         if pilihan == "1":
             penambahan(username)
@@ -89,7 +107,9 @@ def main_tugas(username):
         elif pilihan == "3":
             selesaikanTugas(tugas)
         elif pilihan == "4":
+            hapusTugas(username)
+        elif pilihan == "5":
             print("Terima kasih!, Program selesai.")
             return
         else:
-            print("Invalid. Silakan pilih 1, 2, 3, atau 4.")
+            print("Invalid. Silakan pilih 1, 2, 3, 4 atau 5.")
