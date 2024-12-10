@@ -4,6 +4,7 @@ from viewmodel.menuViewModel import MenuViewModel
 from view.timerView import TimerView
 from view.tipsView import TipsView
 from view.tugasView import TugasView
+from view.jadwalView import JadwalView
 
 class MenuView:
     def __init__(self, username):
@@ -44,7 +45,7 @@ class MenuView:
                     print("This feature is coming soon")
                     time.sleep(3)
                 elif pilihan == '2':
-                    self.handle_schedule()
+                    self.jadwalview.jadwal()
                 elif pilihan == '3':
                     self.tugasview.display()
                 elif pilihan == '4':
