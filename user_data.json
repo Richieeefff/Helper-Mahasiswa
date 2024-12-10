@@ -1,0 +1,10 @@
+{
+    "users": [
+        {
+            "username": "miko",
+            "password": "miko1209",
+            "scheduled_tasks": [],
+            "university_schedule": []
+        }
+    ]
+}
