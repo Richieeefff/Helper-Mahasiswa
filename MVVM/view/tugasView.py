@@ -23,15 +23,28 @@ class TugasView:
             pilihan = input("Pilih opsi (0-3): ")
             if pilihan == '1':
                 date, matkul, judul, desc, diff, dl = self.get_tugas_input()
-                self.viewmodel.add_tugas(date, matkul, judul, desc, diff, dl)
-                print("Tugas berhasil ditambahkan")
+                if self.viewmodel.add_tugas(date, matkul, judul, desc, diff, dl):
+                    print("Tugas berhasil ditambahkan")
+                else:
+                    print("Terdapat kesalahan!")
                 time.sleep(3)
             elif pilihan == '2':
                 self.display_tugas()
                 time.sleep(5)
             elif pilihan == '3':
-                print("Coming soon")
-                time.sleep(3)
+                self.display_tugas()
+                rm = int(input("Masukkan nomor tugas yang ingin di hapus: "))
+                result = self.viewmodel.selesai_tugas(rm)
+                if result:
+                    print(result)
+                    time.sleep(3)
+                    helper.clear()
+                    self.display_tugas()
+                    time.sleep(5)
+                else:
+                    print("ID tugas salah! Silahkan coba lagi.")
+                    time.sleep(3)
+                
             elif pilihan == '0':
                 return
             else:
