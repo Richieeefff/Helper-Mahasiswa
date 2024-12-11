@@ -9,3 +9,6 @@ class TugasViewModel:
     
     def get_tugas(self):
         return self.model.get_tugas()
+    
+    def selesai_tugas(self, tugasID):
+        return self.model.selesai_tugas(tugasID)
