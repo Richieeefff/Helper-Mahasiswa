@@ -15,7 +15,7 @@ Program ini menggunakan library
 - [plyer](https://pypi.org/project/plyer/)
 - [prettytable](https://pypi.org/project/prettytable/)
 
-gunakan [pip](https://pip.pypa.io/en/stable/) untuk menginstall plyer dan [prettytable](https://pypi.org/project/prettytable/#files) untuk menginstall prettytable
+gunakan [pip](https://pip.pypa.io/en/stable/) untuk menginstall plyer dan prettytable
 
 ```bash
 pip install plyer
