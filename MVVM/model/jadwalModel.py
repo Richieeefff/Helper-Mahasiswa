@@ -1,7 +1,7 @@
 import os
 import json
 
-DATA_FILE = 'user_data.json'
+DATA_FILE = "../user_data.json"
 
 class JadwalModel:
     def __init__(self, username):

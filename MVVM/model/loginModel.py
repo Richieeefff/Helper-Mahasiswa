@@ -2,7 +2,7 @@ import json
 import os
 import utils.helper as helper
 
-DATA_FILE = 'user_data.json'
+DATA_FILE = "../user_data.json"
 
 class LoginModel:
     def __init__(self):

@@ -1,7 +1,7 @@
 import json
 import os
 
-DATA_FILE = 'tips_belajar.json'
+DATA_FILE = "../tips_belajar.json"
 
 class TipsModel:
     def __init__(self):
