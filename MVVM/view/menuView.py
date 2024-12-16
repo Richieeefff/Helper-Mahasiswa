@@ -56,4 +56,4 @@ class MenuView:
                     print("Terima kasih telah menggunakan Helper Mahasiswa!")
                     exit()
                 else:
-                    print("Opsi tidak valid. Silakan coba lagi.")
+                    print("Opsi tidak valid! Silakan coba lagi.")
