@@ -31,7 +31,7 @@ class TipsView:
             elif pilihan == '0':
                 return
             else:
-                print("Opsi tidak valid. Silakan coba lagi.")
+                print("Opsi tidak valid! Silakan coba lagi.")
     
     def tips_panel(self):
         while True:
@@ -56,7 +56,7 @@ class TipsView:
             elif pilihan == '0':
                 return
             else:
-                print("Opsi tidak valid. Silakan coba lagi.")
+                print("Opsi tidak valid! Silakan coba lagi.")
 
     def display_menu(self, username):
         if username == "admin":

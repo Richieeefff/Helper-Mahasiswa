@@ -30,7 +30,7 @@ class LoginView:
             elif choice == '0':
                 exit()
             else:
-                print("\nInvalid input! Silakan coba lagi.")
+                print("\nOpsi tidak valid! Silakan coba lagi.")
                 time.sleep(1)
 
     def register(self):

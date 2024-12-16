@@ -14,10 +14,16 @@ class TimerView:
     def get_timer_input(self):
         helper.clear()
         print("Tentukan waktu timer (Interval 10 menit)")
-        hours = int(input("Jam: "))
-        minutes = round(int(input("Menit: ")) / 10) * 10
-        hours += minutes // 60
-        minutes = minutes % 60
+        while True:
+            try:
+                hours = int(input("Jam: "))
+                minutes = round(int(input("Menit: ")) / 10) * 10
+                hours += minutes // 60
+                minutes = minutes % 60
+                break
+            except ValueError:
+                print("Input anda tidak valid! Silahkan coba lagi.\n")
+                helper.clear()
 
         while True:
             pomodoro_input = input("Gunakan pomodoro timer (setiap 25 menit istirahat 5 menit)? [Y/n] ").strip().lower()
@@ -30,9 +36,8 @@ class TimerView:
             else:
                 print("Input invalid! Harap masukkan 'Y' untuk ya atau 'n' untuk tidak.")
 
-        confirm = input(f"Timer akan di set dengan waktu {hours} jam {minutes} menit (pomodoro {pomodoro}). Lanjutkan? [Y/n] ")
-
         while True:
+            confirm = input(f"Timer akan di set dengan waktu {hours} jam {minutes} menit (pomodoro {pomodoro}). Lanjutkan? [Y/n] ")
             if confirm.lower() == "y": 
                 return hours, minutes, pomodoro
             elif confirm.lower() == "n": 
