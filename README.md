@@ -11,10 +11,13 @@ Aplikasi pembantu belajar mahasiswa yang memuat beberapa fitur untuk mempermudah
 
 ## Dependencies
 
-Program ini menggunakan library [plyer](https://pypi.org/project/plyer/)
+Program ini menggunakan library 
+- [plyer](https://pypi.org/project/plyer/)
+- [prettytable](https://pypi.org/project/prettytable/)
 
-gunakan [pip](https://pip.pypa.io/en/stable/) untuk menginstall plyer.
+gunakan [pip](https://pip.pypa.io/en/stable/) untuk menginstall plyer dan prettytable
 
 ```bash
 pip install plyer
+pip install prettytable
 ```
