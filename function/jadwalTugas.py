@@ -29,20 +29,27 @@ def penambahan(username):
 
 
 def tampilan(tugas):
-    if not tugas:
+
+    data = login.load_user_data()
+
+    for user in data["users"]:
+        print(f"Username: {user['username']}\n")
+        print("Scheduled Tasks:")
+        for task in user["scheduled_tasks"]:
+            print(f"- Tanggal: {task['tanggal']}")
+            print(f"  Mata Kuliah: {task['mata_kuliah']}")
+            print(f"  Judul: {task['judul']}")
+            print(f"  Deskripsi: {task['deskripsi']}")
+            print(f"  Tingkat Kesulitan: {task['tingkat_kesulitan']}")
+            print(f"  Tenggat: {task['tenggat']}")
+            print(f"  Status: {task['status']}\n")
+        print("-" * 50)
+
+    if not data:
         print("Cie lagi gak ada tugas.\n")
         return
 
-    for tanggal, tugasHari in tugas.items():
-        print(f"Tugas untuk tanggal {tanggal}:")
-        for jadwalTugas in tugasHari:
-            print(f"  Mata Kuliah: {jadwalTugas['mata_kuliah']}")
-            print(f"  Judul: {jadwalTugas['judul']}")
-            print(f"  Deskripsi: {jadwalTugas['deskripsi']}")
-            print(f"  Tingkat Kesulitan: {jadwalTugas['tingkat_kesulitan']}")
-            print(f"  Tenggat: {jadwalTugas['tenggat']}")
-            print(f"  Status: {jadwalTugas['status']}")
-        print()
+    
 
 def selesaikanTugas(tugas):
     tanggal = input("Masukkan tanggal tugas yang ingin diselesaikan (YYYY-MM-DD): ")

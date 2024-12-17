@@ -31,7 +31,8 @@ def register():
         "username": username,
         "password": password,
         "scheduled_tasks": [],
-        "university_schedule": []
+        "university_schedule": [],
+        "exp": 0
     }
 
     user_data["users"].append(new_user)
