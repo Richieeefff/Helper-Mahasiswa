@@ -6,21 +6,11 @@ import utils.helper as helper
 
 DATA_FILE = 'user_data.json'
 
-def load_user_data():
-    if os.path.exists(DATA_FILE):
-        with open(DATA_FILE, 'r') as file:
-            return json.load(file)
-    return {}
-
-def save_user_data(user_data):
-    with open(DATA_FILE, 'w') as file:
-        json.dump(user_data, file, indent=4)
-
 def register():
     username = input("Masukkan username: ")
     password = getpass.getpass("Masukkan password baru: ")
     
-    user_data = load_user_data()
+    user_data = helper.load_user_data()
     
     if username in user_data:
         print("\nUsername sudah ada! Silakan coba login kembali.")
@@ -36,14 +26,14 @@ def register():
     }
 
     user_data["users"].append(new_user)
-    save_user_data(user_data)
+    helper.save_user_data(user_data)
     print("Berhasil Register.")
 
 def login():
     username = input("Masukkan username: ")
     password = getpass.getpass("Masukkan password: ")
     
-    user_data = load_user_data()
+    user_data = helper.load_user_data()
 
     if username == "admin" and password == "admin":
         return username

@@ -1,4 +1,4 @@
-from function import login
+import utils.helper as helper
 
 def penambahan(username):
     
@@ -10,7 +10,7 @@ def penambahan(username):
     tenggat = input("Masukkan tanggal tenggat tugas (YYYY-MM-DD):")
 
     
-    database = login.load_user_data()
+    database = helper.load_user_data()
     for user in database["users"]:
         if user["username"] == username:
             user["scheduled_tasks"].append({
@@ -22,15 +22,15 @@ def penambahan(username):
                                     'tenggat': tenggat,
                                     'status':'Belum Selesai'
                                     })
-            login.save_user_data(database)
+            helper.save_user_data(database)
             print("Tugas berhasil ditambahkan!\n")
             return
     print(f"User {username} not found.")
 
 
-def tampilan(tugas):
+def tampilan(username):
 
-    data = login.load_user_data()
+    data = helper.load_user_data()
 
     for user in data["users"]:
         print(f"Username: {user['username']}\n")
@@ -48,8 +48,6 @@ def tampilan(tugas):
     if not data:
         print("Cie lagi gak ada tugas.\n")
         return
-
-    
 
 def selesaikanTugas(tugas):
     tanggal = input("Masukkan tanggal tugas yang ingin diselesaikan (YYYY-MM-DD): ")
@@ -82,13 +80,13 @@ def hapusTugas(username):
     tanggal = input("Masukkan tanggal tugas yang ingin dihapus (YYYY-MM-DD): ")
     judul = input("Masukkan judul tugas yang ingin dihapus: ")
 
-    database = login.load_user_data()
+    database = helper.load_user_data()
     for user in database["users"]:
         if user["username"] == username:
             for tugas in user["scheduled_tasks"]:
                 if tugas["tanggal"] == tanggal and tugas["judul"] == judul:
                     user["scheduled_tasks"].remove(tugas)
-                    login.save_user_data(database)
+                    helper.save_user_data(database)
                     print(f"Tugas '{judul}' pada tanggal {tanggal} berhasil dihapus!\n")
                     return
             print("Tugas tidak ditemukan.")
@@ -97,26 +95,28 @@ def hapusTugas(username):
 
 def main_tugas(username):
     tugas = {}
-    
     while True:
-        print("1. Menambah Tugas")
-        print("2. Menampilkan Tugas")
-        print("3. Selesaikan Tugas")
-        print("4. Menghapus Tugas")
-        print("5. Keluar")
+        helper.clear()
+        print("========================================")
+        print("| No |          Menu Tugas             |")
+        print("========================================")
+        print("| 1  | Menambahkan Tugas               |")
+        print("| 2  | Melihat Tugas                   |")
+        print("| 3  | Selesaikan Tugas                |")
+        print("| 4  | Menghapus Tugas                 |")
+        print("| 0  | Keluar                          |")
+        print("========================================")
         
-        pilihan = input("Pilih menu (1/2/3/4/5): ")
-        
-        if pilihan == "1":
+        pilihan = input("Pilih opsi (0-3): ")
+        if pilihan == '1':
             penambahan(username)
-        elif pilihan == "2":
+        elif pilihan == '2':
             tampilan(tugas)
-        elif pilihan == "3":
+        elif pilihan == '3':
             selesaikanTugas(tugas)
-        elif pilihan == "4":
+        elif pilihan == '4':
             hapusTugas(username)
-        elif pilihan == "5":
-            print("Terima kasih!, Program selesai.")
+        elif pilihan == '0':
             return
         else:
-            print("Invalid. Silakan pilih 1, 2, 3, 4 atau 5.")
+            print("Opsi tidak valid! Silakan coba lagi.")
