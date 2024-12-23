@@ -1,25 +1,50 @@
 import utils.helper as helper
+from datetime import datetime
+import time
 
 def penambahan(username):
     
-    tanggal = input("Masukkan tanggal (YYYY-MM-DD):")
-    matkul = input("Masukkan nama mata kuliah: ")
-    judul = input("Masukkan judul tugas: ")
-    deskripsi = input("Masukkan deskripsi  tugas: ")
-    kesulitan = input("Masukkan Tingkat kesulitan (Mudah/Sedang/Sulit): ")
-    tenggat = input("Masukkan tanggal tenggat tugas (YYYY-MM-DD):")
+    tanggal = datetime.today().date()
+    matkul = helper.validate_isalpha("Masukkan nama mata kuliah: ")
+    judul = helper.validate_isalnum("Masukkan judul tugas: ")
+    deskripsi = helper.validate_isalnum("Masukkan deskripsi tugas: ")
+    while True:
+            print("Pilih tingkat kesulitan tugas:")
+            print("1. Mudah")
+            print("2. Sedang:")
+            print("3. Sulit")
+            diffChoice = input("Piling opsi (1-3): ")
+            if diffChoice == '1':
+                kesulitan = "Mudah"
+                break
+            elif diffChoice == '2':
+                kesulitan = "Sedang"
+                break
+            elif diffChoice == '3':
+                kesulitan = "Sulit"
+                break
+            else:
+                print("Opsi tidak valid! Silakan coba lagi.\n")
+                time.sleep(1)
+                helper.clear()
 
-    
+    while True:
+        tenggat = helper.get_valid_date("\nMasukkan tanggal tenggat tugas (YYYY-MM-DD):")
+        if tenggat > tanggal:
+            break
+        else:
+            print("Tanggal tengat waktu lebih awal dari tanggal hari ini")
+
     database = helper.load_user_data()
     for user in database["users"]:
         if user["username"] == username:
             user["scheduled_tasks"].append({
-                                    'tanggal': tanggal,
+                                    'tanggal': str(tanggal),
                                     'mata_kuliah': matkul, 
                                     'judul': judul,
                                     'deskripsi': deskripsi,
                                     'tingkat_kesulitan': kesulitan,
-                                    'tenggat': tenggat,
+                                    'tenggat': str(tenggat),
                                     'status':'Belum Selesai'
                                     })
             helper.save_user_data(database)
@@ -29,72 +54,80 @@ def penambahan(username):
 
 
 def tampilan(username):
+    user = helper.find_user(username)
+    tugas = user.get("scheduled_tasks", [])
 
-    data = helper.load_user_data()
-
-    for user in data["users"]:
-        print(f"Username: {user['username']}\n")
-        print("Scheduled Tasks:")
-        for task in user["scheduled_tasks"]:
-            print(f"- Tanggal: {task['tanggal']}")
-            print(f"  Mata Kuliah: {task['mata_kuliah']}")
-            print(f"  Judul: {task['judul']}")
-            print(f"  Deskripsi: {task['deskripsi']}")
-            print(f"  Tingkat Kesulitan: {task['tingkat_kesulitan']}")
-            print(f"  Tenggat: {task['tenggat']}")
-            print(f"  Status: {task['status']}\n")
-        print("-" * 50)
-
-    if not data:
+    if not tugas:
         print("Cie lagi gak ada tugas.\n")
         return
 
-def selesaikanTugas(tugas):
-    tanggal = input("Masukkan tanggal tugas yang ingin diselesaikan (YYYY-MM-DD): ")
-    if tanggal not in tugas:
-        print("Tidak ada tugas pada tanggal tersebut.\n")
-        return
-    
-    print("Tugas yang tersedia untuk tanggal tersebut:")
-    for i, isiTugas in enumerate(tugas[tanggal]):
-        print(f"{i + 1}. {isiTugas['judul']} - Status: {isiTugas['status']}")
+    print(f"Username: {user['username']}\n")
+    print("Scheduled Tasks:")
+    print("=" * 50)
+    for i, tugas in enumerate(tugas, 1):
+        print(f"Tugas {i}:")
+        print(f"  - Tanggal: {tugas['tanggal']}")
+        print(f"  - Mata_kuliah: {tugas['mata_kuliah']}")
+        print(f"  - Judul: {tugas['judul']}")
+        print(f"  - Deskripsi: {tugas['deskripsi']}")
+        print(f"  - Kesulitan: {tugas['tingkat_kesulitan']}")
+        print(f"  - Tenggat: {tugas['tenggat']}")
+        print(f"  - Status: {tugas['status']}")
+        print("=" * 50)
 
-    pilihan = int(input("Pilih nomor tugas yang ingin diselesaikan: ")) - 1
-    if 0 <= pilihan < len(tugas[tanggal]):
-        tugasPilihan = tugas[tanggal][pilihan]
-        print(f"Status tugas '{tugasPilihan['judul']}' saat ini: {tugasPilihan['status']}")
-        
-        statusBaru = input("Apakah tugas ini sudah selesai? (ya/tidak): ").strip().lower()
-        if statusBaru == 'ya':
-            tugasPilihan['status'] = 'Selesai'
-            print("Status berhasil diubah menjadi 'Selesai'!\n")
-        elif statusBaru == 'tidak':
-            tugasPilihan['status'] = 'Belum Selesai'
-            print("Status berhasil diubah menjadi 'Belum Selesai'!\n")
-        else:
-            print("Input tidak valid. Masukkan 'ya' atau 'tidak'.\n")
-    else:
-        print("Pilihan tidak valid.\n")
+def selesaikanTugas(username):
+    data = helper.load_user_data()
+    tampilan(username)
+    for user in data["users"]:
+        if user["username"] == username:
+            while True:
+                try:
+                    tugasID = int(input("Pilih nomor tugas yang ingin diselesaikan: "))
+                except ValueError:
+                    print("Input tidak valid! Silakan coba lagi.")
+
+                if 1 <= tugasID <= len(user["scheduled_tasks"]):
+                    tugasPilihan = user["scheduled_tasks"][tugasID - 1]
+                    print(f"Status tugas '{tugasPilihan['judul']}' saat ini: {tugasPilihan['status']}\n")
+                    statusBaru = input("Apakah tugas ini sudah selesai? [Y/n] ").strip().lower()
+                    if statusBaru == 'y':
+                        tugasPilihan['status'] = 'Selesai'
+                        helper.save_user_data(data)
+                        print("Status berhasil diubah menjadi 'Selesai'!\n")
+                        return
+                    elif statusBaru == 'n':
+                        tugasPilihan['status'] = 'Belum Selesai'
+                        helper.save_user_data(data)
+                        print("Status berhasil diubah menjadi 'Belum Selesai'!\n")
+                        return
+                    else:
+                        print("Input tidak valid! Harap masukkan 'Y' untuk ya atau 'n' untuk tidak.")
+                else:
+                    print("Tugas tidak ada. Silakan coba lagi")
+                    time.sleep(1)
+
 
 def hapusTugas(username):
-    tanggal = input("Masukkan tanggal tugas yang ingin dihapus (YYYY-MM-DD): ")
-    judul = input("Masukkan judul tugas yang ingin dihapus: ")
-
     database = helper.load_user_data()
+    tampilan(username)
+
     for user in database["users"]:
         if user["username"] == username:
-            for tugas in user["scheduled_tasks"]:
-                if tugas["tanggal"] == tanggal and tugas["judul"] == judul:
-                    user["scheduled_tasks"].remove(tugas)
+            while True:
+                try:
+                    tugasID = int(input("Pilih nomor tugas yang ingin dihapus: "))
+                except ValueError:
+                    print("Input tidak valid! Silakan coba lagi.")
+
+                if 1 <= tugasID <= len(user["scheduled_tasks"]):
+                    remove = user["scheduled_tasks"].pop(tugasID - 1)
                     helper.save_user_data(database)
-                    print(f"Tugas '{judul}' pada tanggal {tanggal} berhasil dihapus!\n")
+                    print(f"Tugas {remove['judul']} berhasil dihapus")
                     return
-            print("Tugas tidak ditemukan.")
-            return
-    print(f"User {username} tidak ditemukan.")
+                else:
+                    print("ID tugas salah! Silahkan coba lagi.")
 
 def main_tugas(username):
-    tugas = {}
     while True:
         helper.clear()
         print("========================================")
@@ -109,13 +142,21 @@ def main_tugas(username):
         
         pilihan = input("Pilih opsi (0-3): ")
         if pilihan == '1':
+            helper.clear()
             penambahan(username)
+            time.sleep(1)
         elif pilihan == '2':
-            tampilan(tugas)
+            helper.clear()
+            tampilan(username)
+            time.sleep(3)
         elif pilihan == '3':
-            selesaikanTugas(tugas)
+            helper.clear()
+            selesaikanTugas(username)
+            time.sleep(1)
         elif pilihan == '4':
+            helper.clear()
             hapusTugas(username)
+            time.sleep(1)
         elif pilihan == '0':
             return
         else:

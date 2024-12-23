@@ -1,5 +1,8 @@
 import os
 import json
+import time
+import msvcrt
+from datetime import datetime
 from plyer import notification
 
 DATA_FILE = "user_data.json"
@@ -26,8 +29,11 @@ def load_user_data():
     return {}
 
 def save_user_data(user_data):
-    with open(DATA_FILE, 'w') as file:
-        json.dump(user_data, file, indent=4)
+    try:
+        with open(DATA_FILE, 'w') as file:
+            json.dump(user_data, file, indent=4)
+    except Exception as e:
+        print(f"Error saving data: {e}")
 
 def find_user(username):
     """Find the user by username."""
@@ -36,3 +42,43 @@ def find_user(username):
         if user["username"] == username:
             return user
     return None
+
+def validate_isalpha(prompt):
+    while True:
+        string = input(prompt).strip()
+        if not string:
+            print("Input tidak boleh kosong! Coba lagi.")
+            time.sleep(1)
+            clear()
+        elif all(char.isalpha() or char.isspace() for char in string):       
+            return string
+        else:
+            print("Input tidak valid! Silakan coba lagi.")
+            time.sleep(1)
+            clear()
+
+def validate_isalnum(prompt):
+    while True:
+        string = input(prompt).strip()
+        if not string:
+            print("Input tidak boleh kosong! Coba lagi.")
+            time.sleep(1)
+            clear()
+        elif all(char.isalnum() or char.isspace() for char in string):       
+            return string
+        else:
+            print("Input tidak valid! Silakan coba lagi.")
+            time.sleep(1)
+            clear()
+
+def get_valid_date(prompt):
+        """
+        Prompt the user for a valid date in the format YYYY-MM-DD.
+        """
+        while True:
+            date_input = input(prompt)
+            try:
+                date = datetime.strptime(date_input, "%Y-%m-%d")
+                return date.date()
+            except ValueError:
+                print("Format tanggal tidak valid. Harap masukkan dalam format YYYY-MM-DD.\n")

@@ -37,13 +37,13 @@ def interface(username):
         if pilihan == '1':
             profil.showProfile(username)
         elif pilihan == '2':
-            jadwalkuliah.main
+            jadwalkuliah.main()
         elif pilihan == '3':
             jadwalTugas.main_tugas(username)
         elif pilihan == '4':
             timerBelajar.timerSetup()
         elif pilihan == '5':
-            tipsBelajar.main
+            tipsBelajar.main_panel()
         elif pilihan == '0':
             print("Terima kasih telah menggunakan Helper Mahasiswa!")
             exit()
@@ -51,11 +51,12 @@ def interface(username):
             print("Opsi tidak valid! Silakan coba lagi.")
 
 def main():
-    username = login.main()
-    if username == "admin":
-        tipsBelajar.main(username)
-    elif username:
-        interface(username)
+    while True:
+        username = login.main()
+        if username == "admin":
+            tipsBelajar.admin_panel()
+        elif username:
+            interface(username)
     
 if __name__ == "__main__":
     main()

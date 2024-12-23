@@ -41,20 +41,36 @@ def countdown(seconds, pomodoro):
     return
 
 def timerSetup():
-    print("Tentukan waktu timer (Interval 10 menit)")
-    jam = int(input("Jam: "))
-    menit = round((int(input("Menit: "))) / 10) * 10 # Pembulatan menit ke puluhan terdekat (e.g. 46 -> 50; 33 -> 30)
-    jam += menit // 60 # Jika menit lebih dari 60, tambahkan ke jam
-    menit = menit % 60 # sisa menit
-    print(f"Timer akan di set dengan waktu {jam} jam {menit} menit\n")
+    while True:
+        helper.clear()
+        print("Tentukan waktu timer (Interval 10 menit)")
+        try:
+            jam = int(input("Jam: "))
+            menit = round(int(input("Menit: ")) / 10) * 10
+            jam += menit // 60
+            menit = menit % 60
+            break
+        except ValueError:
+            print("Input anda tidak valid! Silahkan coba lagi.\n")
+            time.sleep(3)
     
     while True:
-        pomodoro = input("Gunakan pomodoro timer (setiap 25 menit istirahat 5 menit)? [Y/n] ")
-        if pomodoro.lower() == "y":
-            countdown((menit*60) + (jam*3600), True) # Convert jam dan menit menjadi detik
+        pomodoro_input = input("Gunakan pomodoro timer (setiap 25 menit istirahat 5 menit)? [Y/n] ").strip().lower()
+        if pomodoro_input == "y":
+            pomodoro = True
+            break
+        elif pomodoro_input == "n":
+            pomodoro = False
+            break
+        else:
+            print("Input invalid! Harap masukkan 'Y' untuk ya atau 'n' untuk tidak.")
+
+    while True:
+        confirm = input(f"Timer akan di set dengan waktu {jam} jam {menit} menit (pomodoro {pomodoro}). Lanjutkan? [Y/n] ")
+        if confirm.lower() == "y": 
+            countdown((menit*60) + (jam*3600), pomodoro)
             return
-        elif pomodoro.lower() == "n":
-            countdown((menit*60) + (jam*3600), False) # Convert jam dan menit menjadi detik
+        elif confirm.lower() == "n": 
             return
         else:
-            print("Input salah!")
+            print("Input invalid! Harap masukkan 'Y' untuk ya atau 'n' untuk tidak.")    
