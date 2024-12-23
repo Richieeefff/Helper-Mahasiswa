@@ -91,9 +91,12 @@ def selesaikanTugas(username):
                     print(f"Status tugas '{tugasPilihan['judul']}' saat ini: {tugasPilihan['status']}\n")
                     statusBaru = input("Apakah tugas ini sudah selesai? [Y/n] ").strip().lower()
                     if statusBaru == 'y':
+                        diffExp = {"Mudah": 100, "Sedang": 200, "Sulit": 300}
+                        expGain = diffExp.get(tugasPilihan['tingkat_kesulitan'],0)
+                        user["exp"] = user.get("exp", 0) + expGain
                         tugasPilihan['status'] = 'Selesai'
                         helper.save_user_data(data)
-                        print("Status berhasil diubah menjadi 'Selesai'!\n")
+                        print(f"Status berhasil diubah menjadi 'Selesai'! Anda mendapatkan {expGain} EXP!\n")
                         return
                     elif statusBaru == 'n':
                         tugasPilihan['status'] = 'Belum Selesai'
