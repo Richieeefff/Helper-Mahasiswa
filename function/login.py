@@ -6,21 +6,11 @@ import utils.helper as helper
 
 DATA_FILE = 'user_data.json'
 
-def load_user_data():
-    if os.path.exists(DATA_FILE):
-        with open(DATA_FILE, 'r') as file:
-            return json.load(file)
-    return {}
-
-def save_user_data(user_data):
-    with open(DATA_FILE, 'w') as file:
-        json.dump(user_data, file, indent=4)
-
 def register():
     username = input("Masukkan username: ")
     password = getpass.getpass("Masukkan password baru: ")
     
-    user_data = load_user_data()
+    user_data = helper.load_user_data()
     
     if username in user_data:
         print("\nUsername sudah ada! Silakan coba login kembali.")
@@ -36,17 +26,17 @@ def register():
     }
 
     user_data["users"].append(new_user)
-    save_user_data(user_data)
+    helper.save_user_data(user_data)
     print("Berhasil Register.")
 
 def login():
     username = input("Masukkan username: ")
     password = getpass.getpass("Masukkan password: ")
     
-    user_data = load_user_data()
-
     if username == "admin" and password == "admin":
         return username
+
+    user_data = helper.load_user_data()
 
     for user in user_data["users"]:
         if  username == user["username"] and password == user["password"]:
@@ -62,23 +52,26 @@ def main():
 
     while True:
         helper.clear()
-        print("Silahkan melakukan login terlebih dahulu!\n")
-        print("1. Register")
-        print("2. Login")
-        print("3. Exit")
-        choice = input("Pilih dengan angka: ")
+        print("========================================")
+        print("| No |    Masuk Ke Helper Mahasiswa    |")
+        print("========================================")
+        print("| 1  | Login                           |")
+        print("| 2  | Register                        |")
+        print("| 0  | Keluar                          |")
+        print("========================================")
 
+        choice = input("Pilih dengan angka: ")
         if choice == '1':
-            helper.clear()
-            register()
-        elif choice == '2':
             helper.clear()
             result = login()
             if result is not None:
                 helper.clear()
                 return result
-        elif choice == '3':
-            break
+        elif choice == '2':
+            helper.clear()
+            register()
+        elif choice == '0':
+            exit()
         else:
-            print("\nInvalid input! Silakan coba lagi.")
+            print("\nInput tidak valid! Silakan coba lagi.")
             time.sleep(1)

@@ -21,37 +21,69 @@ def save_tips_data(tips_data):
     with open(DATA_FILE, 'w') as file:
         json.dump(tips_data, file, indent=4)
 
-def tambahTips():
+def tambah_tips():
     admin = input("Masukkan nama anda: ")
     tips = input("Masukkan Tips: ")
     
     tips_data = load_tips_data()
 
-    if tips in tips_data:
-        print("\nTips sudah ada! Silakan masukkan tips kembali.")
-        time.sleep(1)
-        return
+    for key in tips_data:
+        if tips_data[key] == tips:
+            return False
     
     tips_data[admin] = tips
     save_tips_data(tips_data)
-    print("Berhasil menyimpan tips. ") 
+    return True
 
-def main(username):
+def lihat_tips():
+    tips = load_tips_data()
+    if tips:
+        helper.clear()
+        for key, value in tips.items():
+            print(f"Dari {key.title()}: \"{value.title()}\"")
+    else:
+        print("Tidak ada tips untuk saat ini")
+    time.sleep(3)
 
+def admin_panel():
     while True:
         helper.clear()
-        print(f"Silahkan {username} memilih option!\n")
-        print("1. Tambah tips")
-        print("2. Exit")
-        choice = input("Pilih dengan angka: ")
+        print("========================================")
+        print("| No |          Admin Panel            |")
+        print("========================================")
+        print("| 1  | Tambah Tips                     |")
+        print("| 2  | Lihat Tips                      |")
+        print("| 0  | Keluar                          |")
+        print("========================================")
 
-        if choice == '1':
+        pilihan = input("Pilih opsi (0-2): ")
+        if pilihan == '1':
             helper.clear()
-            tambahTips()
-        elif choice == '2':
-            mainInterface.main()
-            break
+            tambah_tips()
+        elif pilihan == '2':
+            helper.clear()
+            lihat_tips()
+        elif pilihan == '0':
+            return
         else:
-            print("\nInvalid input! Silakan coba lagi.")
-            time.sleep(1)
+            print("Opsi tidak valid! Silakan coba lagi.")
+
+def main_panel():
+    helper.clear()
+    print("========================================")
+    print("| No |          Tips Belajar           |")
+    print("========================================")
+    print("| 1  | Lihat Tips                      |")
+    print("| 0  | Kembali                         |")
+    print("========================================")
+    pilihan = input("Pilih opsi (0-1): ")
+
+    if pilihan == '1':
+        helper.clear()
+        lihat_tips()
+    elif pilihan == '0':
+        return
+    else:
+        print("\nOpsi tidak valid! Silakan coba lagi.")
+        time.sleep(1)
 
