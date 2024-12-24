@@ -80,6 +80,11 @@ def selesaikanTugas(username):
     tampilan(username)
     for user in data["users"]:
         if user["username"] == username:
+            if not user["scheduled_tasks"]:
+                print("Tidak ada tugas untuk diselesaikan.\n")
+                time.sleep(2)
+                return
+    
             while True:
                 try:
                     tugasID = int(input("Pilih nomor tugas yang ingin diselesaikan: "))
@@ -116,6 +121,11 @@ def hapusTugas(username):
 
     for user in database["users"]:
         if user["username"] == username:
+            if not user["scheduled_tasks"]:
+                print("Tidak ada tugas untuk dihapus.\n")
+                time.sleep(2)
+                return
+
             while True:
                 try:
                     tugasID = int(input("Pilih nomor tugas yang ingin dihapus: "))
