@@ -1,14 +1,13 @@
-import utils.helper as helper
+from model.profilModel import find_user
 
 def get_user_info(username):
-    
     if username == "admin":
         return {
             "username": username,
             "task_count": None,
             "schedule_count": None,
         }
-    user = helper.find_user(username)
+    user = find_user(username)
     if user:
         task_count = len(user["scheduled_tasks"])
         schedule_count = len(user["university_schedule"])

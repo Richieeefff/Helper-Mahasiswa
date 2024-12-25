@@ -36,7 +36,6 @@ def save_user_data(user_data):
         print(f"Error saving data: {e}")
 
 def find_user(username):
-    """Find the user by username."""
     user_data = load_user_data()
     for user in user_data["users"]:
         if user["username"] == username:
