@@ -1,52 +1,62 @@
-import time
 from utils import helper
 from function import login
 from function import (
     jadwalkuliah,
-    timerBelajar,
     tipsBelajar,
     jadwalTugas,
-    profil
+    timerBelajar,
+    profil,
+    dashboard
 )
 
 def interface(username):
     # Interface utama yang memuat semua fitur setelah user melakukan login
     while True:
+        summary = dashboard.get_user_info(username)
         helper.clear()
-        print(f"Selamat datang {username} di aplikasi Helper Mahasiswa!\n")
-        print("1. profile")
-        print("2. Timer Belajar")
-        print("3. Atur Jadwal Kuliah")
-        print("4. Atur daftar tugas")
-        print("5. Exit")
-        choice = input("Pilih dengan angka: ")
-
-        if choice == "1":
-            helper.clear()
+        print("========================================")
+        print("|       HELPER MAHASISWA DASHBOARD     |")
+        print("========================================")
+        print("|                                      |")
+        print(f"| {summary['welcome_message']:<37}|")
+        print(f"| {summary['task_message']:<37}|")
+        print(f"| {summary['schedule_message']:<37}|")
+        print("|                                      |")
+        print("========================================")
+        print("| No |             Menu                |")
+        print("========================================")
+        print("| 1  | Profil                          |")
+        print("| 2  | Jadwal Kuliah                   |")
+        print("| 3  | Jadwal Tugas                    |")
+        print("| 4  | Timer Belajar                   |")
+        print("| 5  | Tips Belajar                    |")
+        print("| 0  | Keluar                          |")
+        print("========================================")
+    
+        pilihan = input("Pilih opsi (0-5): ")
+        if pilihan == '1':
             profil.showProfile(username)
-        if choice == '2':
-            helper.clear()
-            timerBelajar.timerSetup()
-        elif choice == '3':
-            helper.clear()
+        elif pilihan == '2':
             jadwalkuliah.main()
-        elif choice == '4':
-            helper.clear()
+        elif pilihan == '3':
             jadwalTugas.main_tugas(username)
-        elif choice == '5':
-            print("\nTerima kasih telah menggunakan aplikasi Helper Mahasiswa!")
-            break
+        elif pilihan == '4':
+            timerBelajar.timerSetup()
+        elif pilihan == '5':
+            tipsBelajar.main_panel()
+        elif pilihan == '0':
+            print("Terima kasih telah menggunakan Helper Mahasiswa!")
+            exit()
         else:
-            print("\nInvalid input! Silakan coba lagi.")
-            time.sleep(1)
+            print("Opsi tidak valid! Silakan coba lagi.")
 
 def main():
-    username = login.main()
-    if username == "admin":
-        tipsBelajar.main(username)
-    elif username:
-        interface(username)
+    while True:
+        username = login.main()
+        if username == "admin":
+            tipsBelajar.admin_panel()
+        elif username:
+            interface(username)
     
-
 if __name__ == "__main__":
     main()

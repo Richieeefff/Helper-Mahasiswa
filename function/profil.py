@@ -1,7 +1,7 @@
-from function import login
+import utils.helper as helper
 
 def calculate_level(username, scaling_factor=100):
-    database = login.load_user_data()
+    database = helper.load_user_data()
     for user in database["users"]:
         if user["username"] == username:
             exp = user["exp"]
@@ -11,8 +11,7 @@ def calculate_level(username, scaling_factor=100):
 def showProfile(username):
    
     while True:
-        database = login.load_user_data()
-
+        database = helper.load_user_data()
         
         user = next((u for u in database["users"] if u["username"] == username), None)
 
@@ -21,6 +20,7 @@ def showProfile(username):
             return
 
         # Display user profile
+        helper.clear()
         print("\n--- User Profile ---")
         print(f"Username: {username}")
         print(f"Kamu mempunyai {len(user['scheduled_tasks'])} tugas pending.")
