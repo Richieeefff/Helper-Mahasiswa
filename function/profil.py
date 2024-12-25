@@ -36,7 +36,7 @@ def showProfile(username):
         elif choice == '2':
             return
         else:
-            print("Invalid option. Please try again.")
+            print("\n Invalid input! Silakan coba lagi.")
 
         
 
