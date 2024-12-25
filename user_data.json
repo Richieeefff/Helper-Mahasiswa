@@ -4,7 +4,7 @@
             "username": "miko",
             "password": "miko123",
             "scheduled_tasks": [],
-            "university_schedule": [],
+            "university_schedule": {},
             "exp": 18956
         }
     ]
