@@ -1,4 +1,6 @@
+import utils.helper as helper
 from prettytable import PrettyTable
+import time
 
 def validasi_hari():
     hari_valid = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu']
@@ -44,68 +46,113 @@ def validasi_mata_kuliah():
         else:
             print("Input tidak valid! Nama mata kuliah hanya boleh berisi huruf.")
 
-def penambahan(jadwal):
-    hari = validasi_hari()  
-    waktu = validasi_waktu() 
+def penambahan(username):
+    database = helper.load_user_data()
+    user = next((user for user in database["users"] if user["username"] == username), None)
+
+    if not user:
+        print("User tidak ditemukan.")
+        return
+
+    jadwal = user.get("university_schedule", {})
+    hari = validasi_hari()
+    waktu = validasi_waktu()
     matkul = validasi_mata_kuliah()
-    
+
     if hari not in jadwal:
         jadwal[hari] = []
-    
+
     jadwal[hari].append({'waktu': waktu, 'mata_kuliah': matkul})
+    user["university_schedule"] = jadwal
+
+    helper.save_user_data(database)
     print("Jadwal berhasil ditambahkan!\n")
 
-def tampilan(jadwal):
+
+def tampilan(username):
+    database = helper.load_user_data()
+    user = next((user for user in database["users"] if user["username"] == username), None)
+
+    if not user:
+        print("User tidak ditemukan.")
+        return
+
+    jadwal = user.get("university_schedule", {})
     if not jadwal:
         print("Jadwal kuliah kosong.\n")
         return
-    
+
     table = PrettyTable()
-    table.field_names = ["Hari","Waktu","Mata Kuliah"]
+    table.field_names = ["Hari", "Waktu", "Mata Kuliah"]
 
     for hari, jadwal_hari in jadwal.items():
         for item in jadwal_hari:
             table.add_row([hari, item['waktu'], item['mata_kuliah']])
         
     print(table)
-    print()  
+    print()
 
-def hapusJadwal(jadwal):
+def hapusJadwal(username):
+    database = helper.load_user_data()
+    user = next((user for user in database["users"] if user["username"] == username), None)
+
+    if not user:
+        print("User tidak ditemukan.")
+        return
+
+    jadwal = user.get("university_schedule", {})
     hari = input("Masukkan hari yang ingin dihapus: ")
     if hari not in jadwal:
         print("Hari tidak ditemukan dalam jadwal.\n")
         return
-    
-    tampilan({hari: jadwal[hari]}) 
-    indexHapus = int(input("Masukkan nomor jadwal yang ingin dihapus: ")) - 1
-    
-    if 0 <= indexHapus < len(jadwal[hari]):
-        jadwal[hari].pop(indexHapus)
-        print("Jadwal berhasil dihapus")
-    else:
-        print("Nomor tidak valid")
 
-def editJadwal(jadwal):
+    tampilan(username)
+    try:
+        indexHapus = int(input("Masukkan nomor jadwal yang ingin dihapus: ")) - 1
+        if 0 <= indexHapus < len(jadwal[hari]):
+            jadwal[hari].pop(indexHapus)
+            if not jadwal[hari]:
+                del jadwal[hari]
+            user["university_schedule"] = jadwal
+            helper.save_user_data(database)
+            print("Jadwal berhasil dihapus.\n")
+        else:
+            print("Nomor tidak valid.")
+    except ValueError:
+        print("Input tidak valid.")
+
+def editJadwal(username):
+    database = helper.load_user_data()
+    user = next((user for user in database["users"] if user["username"] == username), None)
+
+    if not user:
+        print("User tidak ditemukan.")
+        return
+
+    jadwal = user.get("university_schedule", {})
     hari = input("Masukkan hari yang ingin diedit: ")
     if hari not in jadwal:
         print("Hari tidak ditemukan dalam jadwal.\n")
         return
-    
-    tampilan({hari: jadwal[hari]})
-    indexJadwal = int(input("Masukkan nomor jadwal yang ingin diedit: ")) - 1
-    
-    if 0 <= indexJadwal < len(jadwal[hari]):
-        waktuBaru = input("Masukkan waktu baru (misal: 08:00 - 10:00): ")
-        matkulBaru = input("Masukkan nama mata kuliah baru: ")
-        jadwal[hari][indexJadwal] = {'waktu': waktuBaru, 'mata_kuliah': matkulBaru}
-        print("Jadwal berhasil diedit!\n")
-    else:
-        print("Nomor jadwal tidak valid.\n")
 
-def main():
-    jadwal = {}  
-    
+    tampilan(username)
+    try:
+        indexJadwal = int(input("Masukkan nomor jadwal yang ingin diedit: ")) - 1
+        if 0 <= indexJadwal < len(jadwal[hari]):
+            waktuBaru = validasi_waktu()
+            matkulBaru = validasi_mata_kuliah()
+            jadwal[hari][indexJadwal] = {'waktu': waktuBaru, 'mata_kuliah': matkulBaru}
+            user["university_schedule"] = jadwal
+            helper.save_user_data(database)
+            print("Jadwal berhasil diedit!\n")
+        else:
+            print("Nomor jadwal tidak valid.\n")
+    except ValueError:
+        print("Input tidak valid.")
+
+def main_jadwal(username):
     while True:
+        helper.clear()
         print("1. Tambah Jadwal Kuliah")
         print("2. Tampilkan Jadwal Kuliah")
         print("3. Hapus Jadwal Kuliah")
@@ -115,15 +162,23 @@ def main():
         pilihan = input("Pilih menu (1/2/3/4/5): ")
         
         if pilihan == "1":
-            penambahan(jadwal)
+            helper.clear()            
+            penambahan(username)
+            time.sleep(1)            
         elif pilihan == "2":
-            tampilan(jadwal)
+            helper.clear()
+            tampilan(username)
+            time.sleep(1)
         elif pilihan == "3":
-            hapusJadwal(jadwal)
+            helper.clear()
+            hapusJadwal(username)
+            time.sleep(1)
         elif pilihan == "4":
-            editJadwal(jadwal)
+            helper.clear()
+            editJadwal(username)
+            time.sleep(1)
         elif pilihan == "5":
-            print("Terima kasih!, Program selesai.")
+            print("Terima kasih! Program selesai.")
             return
         else:
             print("Invalid. Silakan pilih 1, 2, atau 3.")

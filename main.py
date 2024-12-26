@@ -37,7 +37,7 @@ def interface(username):
         if pilihan == '1':
             profil.showProfile(username)
         elif pilihan == '2':
-            jadwalkuliah.main()
+            jadwalkuliah.main_jadwal(username)
         elif pilihan == '3':
             jadwalTugas.main_tugas(username)
         elif pilihan == '4':
