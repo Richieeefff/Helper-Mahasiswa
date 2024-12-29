@@ -5,6 +5,7 @@ from views.jadwalkView import tampilan
 from views.jadwaltViews import main_tugas
 from views.timerViews import display_timer_setup
 from views.tipsViews import display_main_panel
+from views.profilViews import showProfile
 import utils.helper as helper
 
 
@@ -32,7 +33,7 @@ def interface(username):
 
         pilihan = input("Pilih opsi (0-5): ")
         if pilihan == '1':
-            display_user_info(username)
+            showProfile(username)
         elif pilihan == '2':
             tampilan()
         elif pilihan == '3':
