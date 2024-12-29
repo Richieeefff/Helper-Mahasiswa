@@ -12,7 +12,9 @@ def register_user(username, password):
         "password": password,
         "scheduled_tasks": [],
         "university_schedule": [],
-        "exp": 0
+        "exp": 0,
+        "time":[],
+        "tipe": None
     }
     user_data["users"].append(new_user)
     save_users(user_data)

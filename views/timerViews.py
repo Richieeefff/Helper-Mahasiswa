@@ -2,7 +2,7 @@ import time
 from viewmodel.timerViewmodel import set_time, set_pomodoro, confirm_timer_setup, start_timer
 import utils.helper as helper
 
-def display_timer_setup():
+def display_timer_setup(username):
     helper.clear()
     print("Tentukan waktu timer (Interval 10 menit)")
     
@@ -28,9 +28,7 @@ def display_timer_setup():
     
     jam, menit = set_time(jam, menit)
     
-   
     pomodoro = set_pomodoro(pomodoro_input)
 
-
     if confirm_timer_setup(jam, menit, pomodoro):
-        start_timer(jam, menit, pomodoro)
+        start_timer(jam, menit, pomodoro, username)

@@ -3,9 +3,29 @@
         {
             "username": "miko",
             "password": "miko123",
-            "scheduled_tasks": [],
+            "scheduled_tasks": [
+                {
+                    "tanggal": "2024-12-25",
+                    "mata_kuliah": "Daspro",
+                    "judul": "mvvm",
+                    "deskripsi": "mvvm",
+                    "tingkat_kesulitan": "Sedang",
+                    "tenggat": "2024-12-31",
+                    "status": "Selesai"
+                }
+            ],
             "university_schedule": [],
-            "exp": 18956
+            "exp": 18956,
+            "time": [
+                {
+                    "date": "2024-12-29 21:52:52",
+                    "sum_of_minutes": 80
+                },
+                {
+                    "date": "2024-12-29 21:58:01",
+                    "sum_of_minutes": 80
+                }
+            ]
         }
     ]
 }
