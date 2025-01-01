@@ -94,4 +94,11 @@ def get_valid_date(prompt):
                 date = datetime.strptime(date_input, "%Y-%m-%d")
                 return date.date()
             except ValueError:
-                print("Format tanggal tidak valid. Harap masukkan dalam format YYYY-MM-DD.\n")
+                print("Format tanggal tidak valid! Harap masukkan dalam format YYYY-MM-DD.\n")
+
+def validate_time(time):
+    try:
+        time_obj = datetime.strptime(time, "%H:%M")
+        return time_obj
+    except ValueError:
+        return None

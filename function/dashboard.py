@@ -1,4 +1,14 @@
 import utils.helper as helper
+from datetime import datetime
+import locale
+
+locale.setlocale(locale.LC_TIME, "id_ID.UTF-8") # Set ke Indonesia
+
+def get_date():
+    today = datetime.now()
+    day = today.strftime("%A")
+
+    return day
 
 def get_user_info(username):
     
