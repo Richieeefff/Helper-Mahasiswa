@@ -1,7 +1,7 @@
 import os
 import json
 import time
-import msvcrt
+import re
 from datetime import datetime
 from plyer import notification
 
@@ -42,33 +42,47 @@ def find_user(username):
             return user
     return None
 
-def validate_isalpha(prompt):
+def validate_nospace(prompt):
     while True:
         string = input(prompt).strip()
         if not string:
             print("Input tidak boleh kosong! Coba lagi.")
             time.sleep(1)
             clear()
-        elif all(char.isalpha() or char.isspace() for char in string):       
-            return string
-        else:
-            print("Input tidak valid! Silakan coba lagi.")
+        elif not re.match("^[a-zA-Z0-9_]+$", string):
+            print("Input tidak valid! Hanya huruf, angka, dan underscore (_) yang diizinkan.")
             time.sleep(1)
             clear()
+        else:
+            return string
 
-def validate_isalnum(prompt):
+def validate_alpha(prompt):
     while True:
         string = input(prompt).strip()
         if not string:
             print("Input tidak boleh kosong! Coba lagi.")
             time.sleep(1)
             clear()
-        elif all(char.isalnum() or char.isspace() for char in string):       
-            return string
-        else:
+        elif not re.match("^[a-zA-Z _]+$", string):       
             print("Input tidak valid! Silakan coba lagi.")
             time.sleep(1)
             clear()
+        else:
+            return string
+
+def validate_alnum(prompt):
+    while True:
+        string = input(prompt).strip()
+        if not string:
+            print("Input tidak boleh kosong! Coba lagi.")
+            time.sleep(1)
+            clear()
+        elif not re.match("^[a-zA-Z0-9 _]+$", string):       
+            print("Input tidak valid! Silakan coba lagi.")
+            time.sleep(1)
+            clear()
+        else:
+            return string
 
 def get_valid_date(prompt):
         """
