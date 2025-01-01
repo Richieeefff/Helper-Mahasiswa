@@ -40,11 +40,5 @@ def countdown(seconds, pomodoro):
     return
 
 def timerSetup(jam, menit, pomodoro):
-    confirm = input(f"Timer akan di set dengan waktu {jam} jam {menit} menit (pomodoro {pomodoro}). Lanjutkan? [Y/n] ")
-    if confirm.lower() == "y":
         countdown((menit * 60) + (jam * 3600), pomodoro)
         return
-    elif confirm.lower() == "n":
-        return
-    else:
-        print("Input invalid! Harap masukkan 'Y' untuk ya atau 'n' untuk tidak.")  
