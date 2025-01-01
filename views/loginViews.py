@@ -2,6 +2,7 @@ import re
 import getpass
 import time
 import utils.helper as helper
+import sys
 from viewmodel.loginViewmodel import register_user, authenticate_user
 
 def display_main_menu():
@@ -67,7 +68,7 @@ def display_main_menu():
                 print("\nUsername sudah ada! Silakan coba login kembali.")
                 time.sleep(1)
         elif choice == '0':
-            exit()
+            sys.exit()
         else:
             print("\nInput tidak valid! Silakan coba lagi.")
             time.sleep(1)

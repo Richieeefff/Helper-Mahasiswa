@@ -7,6 +7,8 @@ from views.timerViews import display_timer_setup
 from views.tipsViews import display_main_panel
 from views.profilViews import showProfile
 import utils.helper as helper
+import time
+import sys
 
 
 def interface(username):
@@ -46,7 +48,8 @@ def interface(username):
             display_main_panel()
         elif pilihan == '0':
             print("Terima kasih telah menggunakan Helper Mahasiswa!")
-            exit()
+            time.sleep(1)
+            sys.exit()
         else:
             print("Opsi tidak valid! Silakan coba lagi.")
     
