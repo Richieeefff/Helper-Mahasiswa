@@ -4,10 +4,6 @@ import time
 import utils.helper as helper
 import sys
 import os
-import main as mainInterface
-
-# Add the directory of `main.py` to sys.path
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 DATA_FILE = 'tips_belajar.json'
 
