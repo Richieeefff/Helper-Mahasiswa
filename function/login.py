@@ -29,9 +29,9 @@ def register():
         else:
             break
     
-    user_data = helper.find_user(username)
+    user_data = helper.load_user_data()
     
-    if user_data:
+    if any(user["username"] == username for user in user_data["users"]):
         print("\nUsername sudah ada! Silakan coba login kembali.")
         time.sleep(1)
         return
