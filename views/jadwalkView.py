@@ -1,40 +1,40 @@
-import prettytable
+from prettytable import PrettyTable
 from viewmodel import jadwalkViewmodel
+import utils.helper as helper
+import time
 
-def tampilan(jadwal):
-    if not jadwal:
-        print("Jadwal kuliah kosong.\n")
-        return
-    
-    table = PrettyTable()
-    table.field_names = ["Hari","Waktu","Mata Kuliah"]
-
-    for hari, jadwal_hari in jadwal.items():
-        for item in jadwal_hari:
-            table.add_row([hari, item['waktu'], item['mata_kuliah']])
-        
-    print(table)
-    print()  
-
+def main_jadwal(username):
     while True:
-        print("1. Tambah Jadwal Kuliah")
-        print("2. Tampilkan Jadwal Kuliah")
-        print("3. Hapus Jadwal Kuliah")
-        print("4. Edit Jadwal Kuliah")
-        print("5. Keluar")
+        helper.clear()
+        print("========================================")
+        print("| No |         Jadwal Kuliah           |")
+        print("========================================")
+        print("| 1  | Tambah Jadwal Kuliah            |")
+        print("| 2  | Tampilkan Jadwal Kuliah         |")
+        print("| 3  | Hapus Jadwal Kuliah             |")
+        print("| 4  | Edit Jadwal Kuliah              |")
+        print("| 0  | Keluar                          |")
+        print("========================================")
         
-        pilihan = input("Pilih menu (1/2/3/4/5): ")
+        pilihan = input("Pilih menu (0-4): ")
         
         if pilihan == "1":
-            jadwalkViewmodel.penambahan(jadwal)
+            helper.clear()
+            jadwalkViewmodel.penambahan(username)
+            time.sleep(1)
         elif pilihan == "2":
-            tampilan(jadwal)
+            helper.clear()
+            jadwalkViewmodel.tampilan(username)
+            time.sleep(1)
         elif pilihan == "3":
-            jadwalkViewmodel.hapusJadwal(jadwal)
+            helper.clear()
+            jadwalkViewmodel.hapusJadwal(username)
+            time.sleep(1)
         elif pilihan == "4":
-            jadwalkViewmodel.editJadwal(jadwal)
-        elif pilihan == "5":
-            print("Terima kasih!, Program selesai.")
+            helper.clear()
+            jadwalkViewmodel.editJadwal(username)
+            time.sleep(1)
+        elif pilihan == "0":
             return
         else:
-            print("Invalid. Silakan pilih 1, 2, atau 3.")
+            print("Opsi tidak valid! Silakan coba lagi.")

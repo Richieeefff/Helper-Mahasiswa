@@ -3,18 +3,27 @@
         {
             "username": "miko",
             "password": "miko123",
-            "scheduled_tasks": [
+            "scheduled_tasks": [],
+            "university_schedule": [
                 {
-                    "tanggal": "2024-12-25",
-                    "mata_kuliah": "Daspro",
-                    "judul": "mvvm",
-                    "deskripsi": "mvvm",
-                    "tingkat_kesulitan": "Sedang",
-                    "tenggat": "2024-12-31",
-                    "status": "Selesai"
+                    "hari": "Senin",
+                    "jadwal": [
+                        {
+                            "waktu": "08:00-09:00",
+                            "mata_kuliah": "Daspro"
+                        }
+                    ]
+                },
+                {
+                    "hari": "Selasa",
+                    "jadwal": [
+                        {
+                            "waktu": "08:00-12:00",
+                            "mata_kuliah": "PRPL"
+                        }
+                    ]
                 }
             ],
-            "university_schedule": [],
             "exp": 18956,
             "time": [
                 {
