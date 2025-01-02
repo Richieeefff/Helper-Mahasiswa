@@ -1,4 +1,5 @@
 from model.profilModel import find_user
+from utils.helper import load_user_data
 import locale
 from datetime import datetime
 
@@ -47,8 +48,13 @@ def get_user_info(username):
                 weekly_totals[year_week] = 0
             weekly_totals[year_week] += sum_minutes
 
+        database = load_user_data()
 
-        task_count = len(user["scheduled_tasks"])
+        task_count = sum(
+                            1 for user in database["users"]
+                            for task in user.get("scheduled_tasks", [])
+                            if task.get("status") == "Belum Selesai"
+                        )
         schedule_count = jadwal_hariini(user["university_schedule"])
         week_hours = {week: total_minutes / 60 for week, total_minutes in weekly_totals.items()}
 

@@ -3,7 +3,26 @@
         {
             "username": "miko",
             "password": "miko123",
-            "scheduled_tasks": [],
+            "scheduled_tasks": [
+                {
+                    "tanggal": "2025-01-02",
+                    "mata_kuliah": "daspro",
+                    "judul": "daspro",
+                    "deskripsi": "dasprooo",
+                    "tingkat_kesulitan": "Sedang",
+                    "tenggat": "2025-01-13",
+                    "status": "Selesai"
+                },
+                {
+                    "tanggal": "2025-01-02",
+                    "mata_kuliah": "prpl",
+                    "judul": "prpl",
+                    "deskripsi": "prpl",
+                    "tingkat_kesulitan": "Sulit",
+                    "tenggat": "2025-01-17",
+                    "status": "Selesai"
+                }
+            ],
             "university_schedule": [
                 {
                     "hari": "Senin",
@@ -24,7 +43,7 @@
                     ]
                 }
             ],
-            "exp": 18956,
+            "exp": 19356,
             "time": [
                 {
                     "date": "2024-12-29 21:52:52",

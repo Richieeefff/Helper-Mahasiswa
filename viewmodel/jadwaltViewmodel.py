@@ -31,7 +31,11 @@ def complete_task(username, task_index, status):
     for user in data["users"]:
         if user["username"] == username:
             if 0 <= task_index < len(user["scheduled_tasks"]):
+                tugasPilihan = user["scheduled_tasks"][task_index - 1]
                 user["scheduled_tasks"][task_index]["status"] = status
+                diffExp = {"Mudah": 100, "Sedang": 200, "Sulit": 300}
+                expGain = diffExp.get(tugasPilihan['tingkat_kesulitan'],0)
+                user["exp"] = user.get("exp", 0) + expGain
                 save_user_data(data)
                 return True
     return False

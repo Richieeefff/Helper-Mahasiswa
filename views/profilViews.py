@@ -27,6 +27,11 @@ def showProfile(username):
         database = load_user_data()
         user_info = get_user_info(username)
         user = next((u for u in database["users"] if u["username"] == username), None)
+        task_done =  sum(
+                            1 for user in database["users"]
+                            for task in user.get("scheduled_tasks", [])
+                            if task.get("status") == "Belum Selesai"
+                        )
 
         if not user:
             print(f"User '{username}' not found.")
@@ -36,7 +41,7 @@ def showProfile(username):
         clear()
         print("\n--- User Profile ---")
         print(f"Username: {username}")
-        print(f"Kamu mempunyai {len(user['scheduled_tasks'])} tugas pending.")
+        print(f"Kamu mempunyai {task_done} tugas pending.")
         print(f"Level: {calculate_level(username)}")  
         print(user_info["schedule_message"])
         print(user_info["week_hours"])
