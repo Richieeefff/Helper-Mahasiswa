@@ -1,11 +1,9 @@
-from views.profilViews import display_user_info
-from views.loginViews import display_main_menu
-from views.tipsViews import display_admin_panel
-from views.jadwalkView import main_jadwal
-from views.jadwaltViews import main_tugas
-from views.timerViews import display_timer_setup
-from views.tipsViews import display_main_panel
-from views.profilViews import showProfile
+from views.profilViews import *
+from views.loginViews import *
+from views.tipsViews import *
+from views.jadwalkView import *
+from views.jadwaltViews import *
+from views.timerViews import *
 import utils.helper as helper
 import time
 import sys
