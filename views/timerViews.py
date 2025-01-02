@@ -1,5 +1,5 @@
 import time
-from viewmodel.timerViewmodel import set_time, set_pomodoro, confirm_timer_setup, start_timer
+from viewmodel.timerViewmodel import set_pomodoro, confirm_timer_setup, start_timer
 import utils.helper as helper
 
 def display_timer_setup(username):
@@ -24,9 +24,7 @@ def display_timer_setup(username):
             break
         else:
             print("Input invalid! Harap masukkan 'Y' untuk ya atau 'n' untuk tidak.")
-    
-    
-    jam, menit = set_time(jam, menit)
+            time.sleep(1)
     
     pomodoro = set_pomodoro(pomodoro_input)
 

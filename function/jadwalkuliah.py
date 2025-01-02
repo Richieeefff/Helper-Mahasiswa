@@ -69,7 +69,7 @@ def penambahan(username):
     database = helper.load_user_data()
     for user in database["users"]:
         if user["username"] == username:
-            jadwal = user.get("university_schedule", [])
+            jadwal = user["university_schedule"]
             hari = validasi_hari()
             waktu = waktu_input(jadwal, hari)
             matkul = helper.validate_alpha("Masukkan nama mata kuliah: ")

@@ -5,9 +5,9 @@ from datetime import datetime
 
 def penambahan(username):
     tanggal = datetime.today().date()
-    matkul = helper.validate_isalpha("Masukkan nama mata kuliah: ")
-    judul = helper.validate_isalnum("Masukkan judul tugas: ")
-    deskripsi = helper.validate_isalnum("Masukkan deskripsi tugas: ")
+    matkul = helper.validate_alpha("Masukkan nama mata kuliah: ")
+    judul = helper.validate_alnum("Masukkan judul tugas: ")
+    deskripsi = helper.validate_alnum("Masukkan deskripsi tugas: ")
 
     while True:
         print("Pilih tingkat kesulitan tugas:")

@@ -1,5 +1,5 @@
 from model.profilModel import find_user
-import json
+import locale
 from datetime import datetime
 
 def get_study_type(week_hours):
@@ -23,7 +23,6 @@ def get_study_type(week_hours):
         return "Belajar Rajin: Belajar sangat rajin dan penuh dedikasi."
     else:
         return "Belajar Sangat Keras: Belajar hampir sepanjang waktu, sangat ambisius."
-
 
 def get_user_info(username):
     if username == "admin":
@@ -50,7 +49,7 @@ def get_user_info(username):
 
 
         task_count = len(user["scheduled_tasks"])
-        schedule_count = len(user["university_schedule"])
+        schedule_count = jadwal_hariini(user["university_schedule"])
         week_hours = {week: total_minutes / 60 for week, total_minutes in weekly_totals.items()}
 
 
@@ -71,3 +70,14 @@ def get_user_info(username):
         }
     else:
         raise ValueError("User not found.")
+
+def jadwal_hariini(jadwal):
+    # Set the locale ke Indonesia
+    locale.setlocale(locale.LC_TIME, "id_ID.UTF-8")
+
+    hari = datetime.now().strftime("%A")
+    
+    for day in jadwal:
+        if day["hari"] == hari:
+            return len(day["jadwal"]) 
+    return "Tidak ada"    

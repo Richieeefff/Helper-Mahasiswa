@@ -8,11 +8,8 @@ def display_user_info(username):
             print(f"Welcome, {user_info['username']}!")
             print("Admin does not have tasks or schedules.")
         else:
-            print(user_info["welcome_message"])
-            print(user_info["task_message"])    
-            print(user_info["schedule_message"])
-            print(user_info["week_hours"])
-            print(user_info["tipe"])
+            return user_info
+            
     except ValueError as e:
         print(str(e))
 
@@ -46,13 +43,13 @@ def showProfile(username):
         print(user_info["tipe"])
         print("\nOptions:")
         print("1. Refresh Profile")
-        print("2. Exit")
+        print("0. Exit")
 
         
         choice = input("Pilih degan angka: ")
         if choice == '1':
             continue  
-        elif choice == '2':
+        elif choice == '0':
             return
         else:
             print("\n Invalid input! Silakan coba lagi.")

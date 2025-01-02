@@ -1,12 +1,14 @@
 from views.profilViews import display_user_info
 from views.loginViews import display_main_menu
 from views.tipsViews import display_admin_panel
-from views.jadwalkView import tampilan
+from views.jadwalkView import main_jadwal
 from views.jadwaltViews import main_tugas
 from views.timerViews import display_timer_setup
 from views.tipsViews import display_main_panel
 from views.profilViews import showProfile
 import utils.helper as helper
+import time
+import sys
 
 
 def interface(username):
@@ -18,7 +20,9 @@ def interface(username):
         print("|       HELPER MAHASISWA DASHBOARD     |")
         print("========================================")
         print("|                                      |")
-        display_user_info(username)
+        print(f"| {summary['welcome_message']:<37}|")
+        print(f"| {summary['task_message']:<37}|")
+        print(f"| {summary['schedule_message']:<37}|")
         print("|                                      |")
         print("========================================")
         print("| No |             Menu                |")
@@ -35,7 +39,7 @@ def interface(username):
         if pilihan == '1':
             showProfile(username)
         elif pilihan == '2':
-            tampilan()
+            main_jadwal(username)
         elif pilihan == '3':
             main_tugas(username)
         elif pilihan == '4':
@@ -44,7 +48,8 @@ def interface(username):
             display_main_panel()
         elif pilihan == '0':
             print("Terima kasih telah menggunakan Helper Mahasiswa!")
-            exit()
+            time.sleep(1)
+            sys.exit()
         else:
             print("Opsi tidak valid! Silakan coba lagi.")
     
