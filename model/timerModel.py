@@ -13,18 +13,18 @@ def countdown(seconds, pomodoro):
     helper.clear()
     helper.send_notification("⏰ Timer Belajar ⏰", "Timer Dimulai!")
     print("Timer Dimulai")
-    print("Tekan 'p' untuk melanjutkan atau 's' untuk berhenti.")
+    print("Tekan 'shift' untuk melanjutkan atau 'ctrl' untuk berhenti.")
 
     while seconds and not stopped:
         if paused:
-            print("Timer Dijeda... Tekan 'p' untuk melanjutkan atau 's' untuk berhenti.   ", end="\r")
+            print("Timer Dijeda... Tekan 'shift' untuk melanjutkan atau 'ctrl' untuk berhenti.   ", end="\r")
             time.sleep(1)
             continue
 
         hours = seconds // 3600
         mins = (seconds % 3600) // 60
         secs = seconds % 60
-        print(f"Waktu belajar [{hours:02}:{mins:02}:{secs:02}]  ", end="\r")
+        print(f"Waktu belajar [{hours:02}:{mins:02}:{secs:02}]                                                 ", end="\r")
 
         if pomodoro:
             if pom == 25:  # Every 25 minutes
@@ -34,7 +34,7 @@ def countdown(seconds, pomodoro):
                 pomTimer = 295  # 5-minute break
                 while pomTimer and not stopped:
                     if paused:
-                        print("Istirahat Dijeda... Tekan 'p' untuk melanjutkan atau 's' untuk berhenti.   ", end="\r")
+                        print("Istirahat Dijeda... Tekan 'shift' untuk melanjutkan atau 'ctrl' untuk berhenti.   ", end="\r")
                         time.sleep(1)
                         continue
                     pomMins = pomTimer // 60
@@ -67,10 +67,10 @@ def countdown(seconds, pomodoro):
 def monitor_keys():
     global paused, stopped
     while not stopped:
-        if keyboard.is_pressed('p'):
+        if keyboard.is_pressed('shift'):
             paused = not paused
             time.sleep(0.5)  
-        if keyboard.is_pressed('s'):
+        if keyboard.is_pressed('ctrl'):
             stopped = True
             break
         time.sleep(0.1)  
