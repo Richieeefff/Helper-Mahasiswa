@@ -13,7 +13,12 @@ stopped = False
 def save_timer(seconds, username):
     current_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-    sumMinutes = seconds
+    sumMinutes = seconds / 60
+    
+    if sumMinutes == int(sumMinutes):
+        sumMinutes = int(sumMinutes)
+    else:
+        sumMinutes = round(sumMinutes, 2)
 
     user = find_user(username)
     data = load_user_data()
@@ -62,29 +67,27 @@ def countdown(seconds, pomodoro, username):
                         continue
                     pomMins = pomTimer // 60
                     pomSecs = pomTimer % 60
-                    print(f"Waktu istirahat [{pomMins:02}:{pomSecs:02}]    ", end="\r")
+                    print(f"Waktu istirahat [{pomMins:02}:{pomSecs:02}]                                                         ", end="\r")
                     time.sleep(1)
                     pomTimer -= 1
                 pom = 0
                 if stopped:
                     save_timer(second_awal - seconds,username)
-                    break
+                    return
                 print("Istirahat selesai!         ", end="\r")
                 helper.send_notification("⏰ Pomodoro Timer ⏰", "Istirahat Selesai! Saatnya FOKUS kembali")
                 time.sleep(5)
                 continue
-
-        time.sleep(1)
+        time.sleep(.001)
         seconds -= 1
         if seconds % 60 == 0 and pomodoro:
             pom += 1
-
-    
     if not stopped:
         print("Waktu Belajar Habis!    ")
         helper.send_notification("⏰ Timer Belajar ⏰", "Timer Selesai!")
         save_timer(second_awal,username)
         time.sleep(5)
+    save_timer(second_awal - seconds,username)
     return
 
 

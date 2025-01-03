@@ -8,17 +8,18 @@ def display_timer_setup(username):
     
     while True:
         try:
-            jam = int(input("Jam: "))
-            menit  = 0
-            while menit < 10:
-                print("Masukkan minimal di atas 10 menit")
-                menit = int(input("Menit: "))
+            while True:
+                jam = int(input("Jam: "))
+                menit = int(input("Menit (Minimal 10 menit): "))
+                if not (jam == 0) and (menit < 10):
+                    break
+            
             jam += menit // 60
             menit = menit % 60
             break
         except ValueError:
             print("Input anda tidak valid! Silahkan coba lagi.\n")
-            time.sleep(3)
+            time.sleep(1)
 
     
     while True:
