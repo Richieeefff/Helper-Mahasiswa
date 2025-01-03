@@ -4,18 +4,22 @@ import utils.helper as helper
 
 def display_timer_setup(username):
     helper.clear()
-    print("Tentukan waktu timer (Interval 10 menit)")
+    print("Tentukan waktu timer")
     
     while True:
         try:
-            jam = int(input("Jam: "))
-            menit = round(int(input("Menit: ")) / 10) * 10  
+            while True:
+                jam = int(input("Jam: "))
+                menit = int(input("Menit (Minimal 10 menit): "))
+                if not (jam == 0) and (menit < 10):
+                    break
+            
             jam += menit // 60
             menit = menit % 60
             break
         except ValueError:
             print("Input anda tidak valid! Silahkan coba lagi.\n")
-            time.sleep(3)
+            time.sleep(1)
 
     
     while True:

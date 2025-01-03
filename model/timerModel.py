@@ -2,12 +2,38 @@ import time
 import keyboard  
 import threading
 import utils.helper as helper
+from model.profilModel import find_user
+from utils.helper import load_user_data, save_user_data
+from datetime import datetime
 
 
 paused = False
 stopped = False
 
-def countdown(seconds, pomodoro):
+def save_timer(seconds, username):
+    current_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    sumMinutes = seconds / 60
+    
+    if sumMinutes == int(sumMinutes):
+        sumMinutes = int(sumMinutes)
+    else:
+        sumMinutes = round(sumMinutes, 2)
+
+    user = find_user(username)
+    data = load_user_data()
+
+    for user in data["users"]:
+        if user["username"] == username:
+            
+            user["time"].append({
+                "date": current_date,
+                "sum_of_minutes": sumMinutes
+            })
+            save_user_data(data)
+
+
+def countdown(seconds, pomodoro, username):
     global paused, stopped
     pom = 0  
     helper.clear()
@@ -15,12 +41,14 @@ def countdown(seconds, pomodoro):
     print("Timer Dimulai")
     print("Tekan 'shift' untuk pause atau 'ctrl' untuk berhenti.")
 
+    second_awal = seconds
+
     while seconds and not stopped:
         if paused:
             print("Timer Dijeda... Tekan 'shift' untuk melanjutkan atau 'ctrl' untuk berhenti.   ", end="\r")
             time.sleep(1)
             continue
-
+        
         hours = seconds // 3600
         mins = (seconds % 3600) // 60
         secs = seconds % 60
@@ -39,27 +67,27 @@ def countdown(seconds, pomodoro):
                         continue
                     pomMins = pomTimer // 60
                     pomSecs = pomTimer % 60
-                    print(f"Waktu istirahat [{pomMins:02}:{pomSecs:02}]    ", end="\r")
+                    print(f"Waktu istirahat [{pomMins:02}:{pomSecs:02}]                                                         ", end="\r")
                     time.sleep(1)
                     pomTimer -= 1
                 pom = 0
                 if stopped:
-                    break
+                    save_timer(second_awal - seconds,username)
+                    return
                 print("Istirahat selesai!         ", end="\r")
                 helper.send_notification("⏰ Pomodoro Timer ⏰", "Istirahat Selesai! Saatnya FOKUS kembali")
                 time.sleep(5)
                 continue
-
-        time.sleep(1)
+        time.sleep(.001)
         seconds -= 1
         if seconds % 60 == 0 and pomodoro:
             pom += 1
-
-    
     if not stopped:
         print("Waktu Belajar Habis!    ")
         helper.send_notification("⏰ Timer Belajar ⏰", "Timer Selesai!")
+        save_timer(second_awal,username)
         time.sleep(5)
+    save_timer(second_awal - seconds,username)
     return
 
 
@@ -72,16 +100,15 @@ def monitor_keys():
             time.sleep(0.5)  
         if keyboard.is_pressed('ctrl'):
             stopped = True
-            break
         time.sleep(0.1)  
 
-def timerSetup(jam, menit, pomodoro):
+def timerSetup(jam, menit, pomodoro, username):
     global paused, stopped
     paused = False
     stopped = False
 
     
-    timer_thread = threading.Thread(target=countdown, args=((menit * 60) + (jam * 3600), pomodoro))
+    timer_thread = threading.Thread(target=countdown, args=((menit * 60) + (jam * 3600), pomodoro, username))
     monitor_thread = threading.Thread(target=monitor_keys)
     
     timer_thread.start()
