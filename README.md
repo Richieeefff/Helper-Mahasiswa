@@ -14,10 +14,12 @@ Aplikasi pembantu belajar mahasiswa yang memuat beberapa fitur untuk mempermudah
 Program ini menggunakan library 
 - [plyer](https://pypi.org/project/plyer/)
 - [prettytable](https://pypi.org/project/prettytable/)
+- [keyboard](https://pypi.org/project/keyboard/)
 
 gunakan [pip](https://pip.pypa.io/en/stable/) untuk menginstall plyer dan prettytable
 
 ```bash
 pip install plyer
 pip install prettytable
+pip install keyboard
 ```
