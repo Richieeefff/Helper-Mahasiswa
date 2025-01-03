@@ -45,7 +45,7 @@ def countdown(seconds, pomodoro, username):
 
     while seconds and not stopped:
         if paused:
-            print("Timer Dijeda... Tekan 'shift' untuk melanjutkan atau 'ctrl' untuk berhenti.   ", end="\r")
+            print("Timer Dijeda... Tekan 'shift' untuk melanjutkan atau 'ctrl' untuk berhenti.                  ", end="\r")
             time.sleep(1)
             continue
         
@@ -78,7 +78,7 @@ def countdown(seconds, pomodoro, username):
                 helper.send_notification("⏰ Pomodoro Timer ⏰", "Istirahat Selesai! Saatnya FOKUS kembali")
                 time.sleep(5)
                 continue
-        time.sleep(.001)
+        time.sleep(1)
         seconds -= 1
         if seconds % 60 == 0 and pomodoro:
             pom += 1
