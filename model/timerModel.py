@@ -13,7 +13,7 @@ def countdown(seconds, pomodoro):
     helper.clear()
     helper.send_notification("⏰ Timer Belajar ⏰", "Timer Dimulai!")
     print("Timer Dimulai")
-    print("Tekan 'shift' untuk melanjutkan atau 'ctrl' untuk berhenti.")
+    print("Tekan 'shift' untuk pause atau 'ctrl' untuk berhenti.")
 
     while seconds and not stopped:
         if paused:
@@ -24,7 +24,7 @@ def countdown(seconds, pomodoro):
         hours = seconds // 3600
         mins = (seconds % 3600) // 60
         secs = seconds % 60
-        print(f"Waktu belajar [{hours:02}:{mins:02}:{secs:02}]                                                 ", end="\r")
+        print(f"Waktu belajar [{hours:02}:{mins:02}:{secs:02}]                                                      ", end="\r")
 
         if pomodoro:
             if pom == 25:  # Every 25 minutes
