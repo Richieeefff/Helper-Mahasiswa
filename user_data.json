@@ -1,9 +1,19 @@
 {
     "users": [
         {
-            "username": "miko",
-            "password": "miko1209",
-            "scheduled_tasks": [],
+            "username": "suisei",
+            "password": "suiseii",
+            "scheduled_tasks": [
+                {
+                    "tanggal": "2024-11-27",
+                    "mata_kuliah": "Daspro",
+                    "judul": "array",
+                    "deskripsi": "membuat array",
+                    "tingkat_kesulitan": "sedang",
+                    "tenggat": "2024-11-30",
+                    "status": "Belum Selesai"
+                }
+            ],
             "university_schedule": []
         }
     ]
