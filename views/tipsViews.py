@@ -16,8 +16,8 @@ def display_admin_panel():
         pilihan = input("Pilih opsi (0-2): ")
         if pilihan == '1':
             helper.clear()
-            admin = input("Masukkan nama anda: ")
-            tips = input("Masukkan Tips: ")
+            admin = helper.validate_alnum("Masukkan nama anda: ")
+            tips = helper.validate_alnum("Masukkan Tips: ")
             if add_tip(admin, tips):
                 print("\nTips berhasil ditambahkan!")
             else:
